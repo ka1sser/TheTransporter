@@ -7,6 +7,7 @@ public class Delivery : MonoBehaviour
 {
     //default value is false
     bool hasPackage;
+    [SerializeField] float destroyTime=1f;
     void OnCollisionEnter2D(Collision2D other)
     {
         Debug.Log("Awts!");
@@ -14,14 +15,15 @@ public class Delivery : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Package")
+        if(other.tag == "Package" && !hasPackage)
         {
-            Debug.Log("Whatdapackage!");
             hasPackage = true;
+            Destroy(other.gameObject, destroyTime);
         }
         if(other.tag == "Customer" && hasPackage)
         {
             Debug.Log("Homie!");
+            hasPackage = false;
         }
     }
 }
